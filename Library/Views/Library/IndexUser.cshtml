@@ -1,0 +1,58 @@
+﻿@model System.Data.DataTable
+@{
+    ViewBag.Title = "Library Home Page";
+}
+<br>
+Hello, User (@ViewBag.CurrentUser)!
+<br>
+<div align="right">
+    <a href="@Url.Action("Index", "Library")" style="padding-right: 20px;">Log Out</a>
+</div>
+<br>
+<h2>Books</h2>
+<h3>@ViewBag.TakeBookMessage</h3>
+Filters: <a href="@Url.Action("IndexUser", "Library", new { @sortOrder = "Name", @pageNum =(int)Html.ViewData["PageNum"], @filter = "all", @userEmail = ViewBag.CurrentUser })">Show All</a>
+<a href="@Url.Action("IndexUser", "Library", new { @sortOrder = "Name", @pageNum =(int)Html.ViewData["PageNum"], @filter = "available", @userEmail = ViewBag.CurrentUser })">Show Available</a>
+<a href="@Url.Action("IndexUser", "Library", new { @sortOrder = "Name", @pageNum =(int)Html.ViewData["PageNum"], @filter = "my", @userEmail = ViewBag.CurrentUser })">Show My</a>
+<table class="table table-bordered table-striped">
+    <tr>
+        <th>
+            Name
+            <a href="@Url.Action("IndexUser", "Library", new { @sortOrder = "Name", @pageNum =(int)Html.ViewData["PageNum"], @filter = ViewBag.CurrentFilter, @userEmail = ViewBag.CurrentUser })">⇑</a>
+            <a href="@Url.Action("IndexUser", "Library", new { @sortOrder = "Name desc", @pageNum =(int)Html.ViewData["PageNum"], @filter = ViewBag.CurrentFilter, @userEmail = ViewBag.CurrentUser })">⇓</a>
+        </th>
+        <th>
+            Author
+            <a href="@Url.Action("IndexUser", "Library", new { @sortOrder = "Author", @pageNum =(int)Html.ViewData["PageNum"], @filter = ViewBag.CurrentFilter, @userEmail = ViewBag.CurrentUser })">⇑</a>
+            <a href="@Url.Action("IndexUser", "Library", new { @sortOrder = "Author desc", @pageNum =(int)Html.ViewData["PageNum"], @filter = ViewBag.CurrentFilter, @userEmail = ViewBag.CurrentUser })">⇓</a>
+        </th>
+        <th>
+            Quantity
+            <a href="@Url.Action("IndexUser", "Library", new { @sortOrder = "Quantity", @pageNum =(int)Html.ViewData["PageNum"], @filter = ViewBag.CurrentFilter, @userEmail = ViewBag.CurrentUser })">⇑</a>
+            <a href="@Url.Action("IndexUser", "Library", new { @sortOrder = "Quantity desc", @pageNum =(int)Html.ViewData["PageNum"], @filter = ViewBag.CurrentFilter, @userEmail = ViewBag.CurrentUser })">⇓</a>
+        </th>
+            <th>Action</th>
+
+    </tr>
+
+    @for (int i = 0; i < Model.Rows.Count; i++)
+            {
+        <tr>
+            <td>@Model.Rows[i][1]</td>
+            <td>@Model.Rows[i][2]</td>
+            <td>@Model.Rows[i][3]</td>
+
+                <td>
+                    <a href="@Url.Action("TakeBook", "Library", new { @sortOrder = ViewBag.CurrentSort, @pageNum =(int)Html.ViewData["PageNum"], @filter = "all", @userEmail = ViewBag.CurrentUser, @bookId = @Model.Rows[i][0] })">Take</a>
+                </td>
+
+        </tr>
+    }
+</table>
+<p>
+    <a href="@Url.Action("IndexUser", "Library", new {@sortOrder = ViewBag.CurrentSort, @pageNum =((int)Html.ViewData["PageNum"] - 1), @filter = ViewBag.CurrentFilter, @userEmail = ViewBag.CurrentUser })">Previous</a>
+    &nbsp; Page @Html.ViewData["PageNumCurrent"] From @Html.ViewData["PageNumMax"] &nbsp;
+    <a href="@Url.Action("IndexUser", "Library", new {@sortOrder = ViewBag.CurrentSort, @pageNum =((int)Html.ViewData["PageNum"] + 1), @filter = ViewBag.CurrentFilter, @userEmail = ViewBag.CurrentUser})">Next</a>
+
+
+</p>

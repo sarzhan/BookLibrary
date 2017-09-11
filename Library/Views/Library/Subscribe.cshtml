@@ -1,0 +1,16 @@
+﻿@model Library.Models.SubscribeModel
+
+@{
+    ViewBag.Title = "Subscribe";
+}
+
+<h2>Log In \ Subscribe</h2>
+@using (Html.BeginForm("Subscribe", "Library", FormMethod.Post))
+{
+    @Html.TextBoxFor(model => model.Email, new { @type = "email" })
+    <button type="submit">Log In \ Subscribe</button>
+    <br>
+    @Html.ValidationMessageFor(model => model.Email)
+    <br><br>
+    @Html.ActionLink("Back to List", "Index")
+}
